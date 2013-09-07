@@ -1,15 +1,11 @@
 #!/usr/bin/env python
 
-# ---------------------------
-# projects/collatz/Collatz.py
-# Copyright (C) 2013
-# Glenn P. Downing
-# ---------------------------
-
-memorized_cycles = [0]*1000000
+import sys
 # ------------
 # collatz_read
 # ------------
+
+memorized_cycles = [0]*1000000
 
 def collatz_read (r) :
     """
@@ -37,13 +33,15 @@ def collatz_eval ((i, j)) :
     assert j > 0
     minRange = min(i, j)
     maxRange = max(i, j)
-    v = 1
+    print xrange(100, 1)
+    v = 1;
     for n in range(minRange, maxRange+1):
         v = max(v, collatz_solver(n))
     assert v > 0
     return v
 
 def collatz_solver(n):
+    assert n > 0
     if n == 1:
         return 1
     elif n < 1000000:
@@ -88,3 +86,9 @@ def collatz_solve (r, w) :
     for t in collatz_read(r) :
         v = collatz_eval(t)
         collatz_print(w, t, v)
+        
+# ----
+# main
+# ----
+if __name__ == '__main__':
+    collatz_solve(sys.stdin, sys.stdout)
