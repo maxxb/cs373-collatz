@@ -6,6 +6,8 @@
 # Glenn P. Downing
 # ---------------------------
 
+memorized_cycles = [0]*1000000
+
 # ------------
 # collatz_read
 # ------------
@@ -42,15 +44,23 @@ def collatz_eval ((i, j)) :
 	assert v > 0
     return v
 
-def collatz_solver2(n):
-    cycles = 1
-    while n != 1:
-        cycles = cycles +1
-        if n % 2 == 0:
-            n = n/2
+def collatz_solver(n):
+    if n == 1:
+        return 1
+    elif n < 1000000:
+        if memorized_cycles[n]:
+            return memorized_cycles[n]
+        elif (n % 2): #odd
+            memorized_cycles[n] = collatz_solver(3 * n + 1) + 1
+            return memorized_cycles[n]
+        else:   #even
+            memorized_cycles[n] = collatz_solver(n >> 1) + 1
+            return memorized_cycles[n]
+    else :
+        if n % 2:
+            return collatz_solver(3 * n + 1) + 1
         else:
-            n = 3*n+1
-    return cycles
+            return collatz_solver(n >> 1) + 1
 	
 # -------------
 # collatz_print
