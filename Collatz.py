@@ -50,14 +50,14 @@ def collatz_solver(n):
     elif n < 1000000:
         if memorized_cycles[n]:
             return memorized_cycles[n]
-        elif (n % 2): #odd
+        elif (n & 1): #odd
             memorized_cycles[n] = collatz_solver(3 * n + 1) + 1
             return memorized_cycles[n]
         else:   #even
             memorized_cycles[n] = collatz_solver(n >> 1) + 1
             return memorized_cycles[n]
     else :
-        if n % 2:
+        if n & 1:
             return collatz_solver(3 * n + 1) + 1
         else:
             return collatz_solver(n >> 1) + 1
