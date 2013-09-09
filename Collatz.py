@@ -38,19 +38,23 @@ def collatz_eval ((i, j)) :
     minRange = min(i, j)
     maxRange = max(i, j)
     v = 1
+    mid = maxRange >> 1
+    if(minRange < mid):
+        minRange = mid
     for n in range(minRange, maxRange+1):
         v = max(v, collatz_solver(n))
     assert v > 0
     return v
 
 def collatz_solver(n):
+    assert n >=1
     if n == 1:
         return 1
     elif n < 1000000:
         if memorized_cycles[n]:
             return memorized_cycles[n]
-        elif (n & 1): #odd
-            memorized_cycles[n] = collatz_solver(3 * n + 1) + 1
+        elif n & 1: #odd
+            memorized_cycles[n] = collatz_solver((3 * n + 1)>>1) + 2
             return memorized_cycles[n]
         else:   #even
             memorized_cycles[n] = collatz_solver(n >> 1) + 1
