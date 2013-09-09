@@ -33,12 +33,23 @@ def collatz_eval ((i, j)) :
     assert j > 0
     minRange = min(i, j)
     maxRange = max(i, j)
-    v = 1;
+    v = 1
     mid = maxRange >> 1
     if(minRange < mid):
         minRange = mid
-    for n in range(minRange, maxRange+1):
-        v = max(v, collatz_solver(n))
+    
+    odds = []
+    if(minRange & 1):
+        odds = range(minRange, maxRange+1, 2)
+    else :
+        odds = range(minRange+1, maxRange+1, 2)
+    
+    if(len(odds) > 0): 
+        for n in odds:
+                v = max(v, collatz_solver(n))
+    else:
+        for n in range(minRange, maxRange+1):
+            v = max(v, collatz_solver(n))
     assert v > 0
     return v
 
